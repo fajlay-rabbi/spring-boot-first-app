@@ -4,6 +4,7 @@ public class TodoDTO {
     private Long todoId;
     private String Todo;
     private Long personId;
+    private String category;
 
     public TodoDTO() {
         super();
@@ -36,6 +37,14 @@ public class TodoDTO {
 
     public void setPersonId(Long personId) {
         this.personId = personId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     @Override

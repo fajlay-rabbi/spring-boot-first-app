@@ -17,6 +17,7 @@ import java.util.List;
 @RequestMapping("api/v1/todo")
 public class TodoController {
     private final TodoService todoService;
+
     @Autowired
     public TodoController(TodoService todoService) {
         this.todoService = todoService;
@@ -41,7 +42,9 @@ public class TodoController {
 
     @PostMapping("/new-todo")
     public ResponseEntity<TodoEntities> addNewTodo(@RequestBody TodoDTO todoDTO){
-        TodoEntities newTodo = todoService.addTodo(todoDTO.getPersonId(), todoDTO.getTodo(), )
+        TodoEntities newTodo = todoService.addTodo(todoDTO.getPersonId(), todoDTO.getTodo(), todoDTO.getCategory());
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

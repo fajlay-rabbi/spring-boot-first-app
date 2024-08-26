@@ -46,6 +46,7 @@ public class TodoService {
     }
 
 
+
     public PersonEntities addAUser(String name, String email, String address){
         PersonEntities newUser = new PersonEntities();
         newUser.setName(name);
@@ -59,24 +60,23 @@ public class TodoService {
         return personRepo.save(newUser);
     }
 
+
+
     public TodoEntities addTodo(Long personID, String todoText, String category){
+
+
         Optional<PersonEntities> personOptional = personRepo.findById(personID);
         if (personOptional.isEmpty()){
             throw new RuntimeException("Person not found");
         }
+        CategoryEntities cat = cateRepo.findByCategory(category.trim())
+                    .orElseGet(() -> cateRepo.save(new CategoryEntities(category.trim())));
+
         TodoEntities newTodo = new TodoEntities();
         newTodo.setTodo(todoText);
         newTodo.setPersonEntities(personOptional.get());
 
-        String[] categoryName = category.split(",");
-        Set<CategoryEntities> categories = new HashSet<>();
-        for (String catName : categoryName){
-            CategoryEntities cat = cateRepo.findByCategory(catName.trim())
-                    .orElseGet(() -> cateRepo.save(new CategoryEntities(catName.trim())));
-            categories.add(cat);
-        }
-
-        newTodo.setCategories(categories);
+        newTodo.getCategories().add(cat);
 
         return todoRepo.save(newTodo);
     }
